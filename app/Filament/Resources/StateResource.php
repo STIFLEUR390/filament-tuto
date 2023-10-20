@@ -20,7 +20,7 @@ class StateResource extends Resource
 
     protected static ?string $navigationGroup = 'System management';
 
-    protected static ?string $navigationIcon = 'heroicon-o-flag';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     protected static ?int $navigationSort = 2;
 
