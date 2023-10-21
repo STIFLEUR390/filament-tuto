@@ -44,6 +44,7 @@ class CityResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('state.name')
+                    ->label('Région')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
