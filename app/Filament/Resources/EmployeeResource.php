@@ -88,11 +88,15 @@ class EmployeeResource extends Resource
                 Forms\Components\Section::make('Date')
                     ->schema([
                         Forms\Components\DatePicker::make('date_of_birth')
+                            ->native(false)
+                            ->displayFormat('d/m/Y')
                             ->required(),
                         Forms\Components\DatePicker::make('date_hired')
+                            ->native(false)
+                            ->displayFormat('d/m/Y')
                             ->required(),
                     ])->columns(2),
-                Forms\Components\TextInput::make('country_id')
+                /*Forms\Components\TextInput::make('country_id')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('state_id')
@@ -104,7 +108,7 @@ class EmployeeResource extends Resource
                 Forms\Components\TextInput::make('department_id')
                     ->required()
                     ->numeric()
-                    ->columnSpanFull(),
+                    ->columnSpanFull(),*/
             ])->columns(3);
     }
 
