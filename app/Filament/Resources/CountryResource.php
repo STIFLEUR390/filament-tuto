@@ -6,6 +6,9 @@ use App\Filament\Resources\CountryResource\Pages;
 use App\Models\Country;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -71,6 +74,18 @@ class CountryResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Section::make('Country info')->schema([
+                TextEntry::make('name')->label('Non du pays'),
+                TextEntry::make('code')->label('Code du pays'),
+                TextEntry::make('phonecode'),
+            ])->columns(3),
+        ]);
+
     }
 
     public static function getRelations(): array

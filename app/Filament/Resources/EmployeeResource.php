@@ -8,6 +8,9 @@ use App\Models\Employee;
 use App\Models\State;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -174,6 +177,30 @@ class EmployeeResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Section::make('Relationships info')->schema([
+                TextEntry::make('country.name'),
+                TextEntry::make('state.name'),
+                TextEntry::make('city.name'),
+                TextEntry::make('department.name'),
+            ])->columns(2),
+            Section::make('User info')->schema([
+                TextEntry::make('first_name'),
+                TextEntry::make('last_name'),
+                TextEntry::make('middle_name'),
+                TextEntry::make('address'),
+                TextEntry::make('zip_code'),
+            ])->columns(3),
+            Section::make('Date')->schema([
+                TextEntry::make('date_of_birth')->date('d/m/Y'),
+                TextEntry::make('date_hired')->date(),
+            ])->columns(2),
+        ]);
+
+    }
+
     public static function getRelations(): array
     {
         return [
@@ -186,7 +213,7 @@ class EmployeeResource extends Resource
         return [
             'index' => Pages\ListEmployees::route('/'),
             'create' => Pages\CreateEmployee::route('/create'),
-            'view' => Pages\ViewEmployee::route('/{record}'),
+            //'view' => Pages\ViewEmployee::route('/{record}'),
             'edit' => Pages\EditEmployee::route('/{record}/edit'),
         ];
     }

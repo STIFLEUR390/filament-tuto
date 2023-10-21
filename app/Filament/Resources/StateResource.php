@@ -6,6 +6,9 @@ use App\Filament\Resources\StateResource\Pages;
 use App\Models\State;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -52,8 +55,7 @@ class StateResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('country.name')
-                    ->sortable()
-                ,
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Non de la région')
                     ->sortable()
@@ -81,6 +83,21 @@ class StateResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        /*return $infolist->schema([
+            TextEntry::make('country.name')->label("Non du pays"),
+            TextEntry::make('name')->label("Non de la région")
+        ]);*/
+        return $infolist->schema([
+            Section::make('State info')->schema([
+                TextEntry::make('country.name')->label('Non du pays'),
+                TextEntry::make('name')->label('Non de la région'),
+            ])->columns(2),
+        ]);
+
     }
 
     public static function getRelations(): array

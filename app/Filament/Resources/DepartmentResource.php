@@ -6,6 +6,9 @@ use App\Filament\Resources\DepartmentResource\Pages;
 use App\Models\Department;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -65,6 +68,20 @@ class DepartmentResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Section::make('Department info')->schema([
+                TextEntry::make('name')->label('Non du département'),
+                TextEntry::make('employees_count')->label("Nombre d'employés")
+                    ->state(function (Department $record): int {
+                        return $record->employees()->count();
+                    }),
+            ])->columns(2),
+        ]);
+
+    }
+
     public static function getRelations(): array
     {
         return [
@@ -77,7 +94,7 @@ class DepartmentResource extends Resource
         return [
             'index' => Pages\ListDepartments::route('/'),
             'create' => Pages\CreateDepartment::route('/create'),
-            'view' => Pages\ViewDepartment::route('/{record}'),
+            // 'view' => Pages\ViewDepartment::route('/{record}'),
             'edit' => Pages\EditDepartment::route('/{record}/edit'),
         ];
     }

@@ -6,6 +6,9 @@ use App\Filament\Resources\CityResource\Pages;
 use App\Models\City;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -71,6 +74,17 @@ class CityResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Section::make('City info')->schema([
+                TextEntry::make('state.name')->label('Non de la région'),
+                TextEntry::make('name')->label('Non de la ville'),
+            ])->columns(2),
+        ]);
+
+    }
+
     public static function getRelations(): array
     {
         return [
@@ -83,7 +97,7 @@ class CityResource extends Resource
         return [
             'index' => Pages\ListCities::route('/'),
             'create' => Pages\CreateCity::route('/create'),
-            'view' => Pages\ViewCity::route('/{record}'),
+            // 'view' => Pages\ViewCity::route('/{record}'),
             'edit' => Pages\EditCity::route('/{record}/edit'),
         ];
     }
