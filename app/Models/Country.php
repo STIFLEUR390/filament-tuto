@@ -10,7 +10,7 @@ class Country extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["name", "code", "phonecode"];
+    protected $fillable = ['name', 'code', 'phonecode'];
 
     public function states(): HasMany
     {

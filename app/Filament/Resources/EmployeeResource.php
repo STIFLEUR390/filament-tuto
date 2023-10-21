@@ -3,7 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\EmployeeResource\Pages;
+use App\Models\City;
 use App\Models\Employee;
+use App\Models\State;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -28,16 +30,32 @@ class EmployeeResource extends Resource
                             ->relationship('country', 'name')
                             ->searchable()
                             ->preload()
+                            ->live()
+                            ->afterStateUpdated(
+                                function (Forms\Set $set) {
+                                    $set('state_id', null);
+                                    $set('city_id', null);
+                                }
+                            )
                             ->required(),
                         Forms\Components\Select::make('state_id')
-                            ->relationship('state', 'name')
+                            ->options(fn (Forms\Get $get): \Illuminate\Support\Collection => State::query()
+                                ->where('country_id', $get('country_id'))
+                                ->pluck('name', 'id')
+                            )
                             ->searchable()
                             ->preload()
+                            ->live()
+                            ->afterStateUpdated(fn (Forms\Set $set) => $set('city_id', null))
                             ->required(),
                         Forms\Components\Select::make('city_id')
-                            ->relationship('city', 'name')
+                            ->options(fn (Forms\Get $get): \Illuminate\Support\Collection => City::query()
+                                ->where('state_id', $get('state_id'))
+                                ->pluck('name', 'id')
+                            )
                             ->searchable()
-                            // ->preload()
+                            ->preload()
+                            ->live()
                             ->required(),
                         Forms\Components\Select::make('department_id')
                             ->relationship('department', 'name')
