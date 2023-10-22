@@ -89,6 +89,8 @@ class StateResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->successNotificationTitle('Région supprimer avec succès'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
