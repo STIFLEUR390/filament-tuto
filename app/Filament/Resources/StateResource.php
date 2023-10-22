@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\StateResource\Pages;
+use App\Filament\Resources\StateResource\RelationManagers\CitiesRelationManager;
+use App\Filament\Resources\StateResource\RelationManagers\EmployeesRelationManager;
 use App\Models\State;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -26,6 +28,16 @@ class StateResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     protected static ?int $navigationSort = 2;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() > 10 ? 'warning' : 'success';
+    }
 
     public static function form(Form $form): Form
     {
@@ -103,7 +115,8 @@ class StateResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CitiesRelationManager::class,
+            EmployeesRelationManager::class,
         ];
     }
 

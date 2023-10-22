@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CountryResource\Pages;
+use App\Filament\Resources\CountryResource\RelationManagers\EmployeesRelationManager;
+use App\Filament\Resources\CountryResource\RelationManagers\StatesRelationManager;
 use App\Models\Country;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -28,6 +30,11 @@ class CountryResource extends Resource
     // protected static ?string $slug = "employee-country";
 
     protected static ?int $navigationSort = 1;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -91,7 +98,8 @@ class CountryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            StatesRelationManager::class,
+            EmployeesRelationManager::class,
         ];
     }
 
